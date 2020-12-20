@@ -1,50 +1,55 @@
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-import { gql, useQuery } from '@apollo/client'
+import {useCallback, useEffect, useRef} from 'react';
+import {useRouter} from 'next/router';
+import {useGetMe, useHandleFileUpload, useGetPhotos} from '../client/network';
+import {makeStyles} from '@material-ui/core/styles';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import styles from '../client/styles/styles.module.css';
+import GridList from '../client/components/GridList';
 
-const ViewerQuery = gql`
-  query ViewerQuery {
-    viewer {
-      id
-      email
-    }
-  }
-`
+const useStyles = makeStyles(() => ({
+  root: {
+    marginTop: 100,
+  },
+}));
 
 const Index = () => {
-  const router = useRouter()
-  const { data, loading, error } = useQuery(ViewerQuery)
-  const viewer = data?.viewer
-  const shouldRedirect = !(loading || error || viewer)
-
+  const classes = useStyles();
+  const router = useRouter();
+  const fileInput = useRef(null);
+  const [error, data] = useGetMe();
+  const [errorMessage, successMsg, handleFileSubmit] = useHandleFileUpload(fileInput);
+  const [fileError, filesData, reload] = useGetPhotos('/api/myFiles');
+  const handleFileUpload = useCallback((event) => {
+    return handleFileSubmit(event, reload);
+  });
   useEffect(() => {
-    if (shouldRedirect) {
-      router.push('/signin')
+    if (error) {
+      router.push('/signin');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shouldRedirect])
-
-  if (error) {
-    return <p>{error.message}</p>
-  }
-
-  if (viewer) {
+  }, [error]);
+  if (data)
     return (
-      <div>
-        You're signed in as {viewer.email} goto{' '}
-        <Link href="/about">
-          <a>about</a>
-        </Link>{' '}
-        page. or{' '}
-        <Link href="/signout">
-          <a>signout</a>
-        </Link>
+      <div className={styles.flexColumn}>
+        <center>
+          <p>You are logged in as {data.email}</p>
+        </center>
+        <div className={styles.flexColumn} style={{border: 'solid', borderRadius: '22px', padding: '20px'}}>
+          <form onSubmit={handleFileUpload} style={{maxWidth: '80%', alignSelf: 'center'}}>
+            {successMsg && <p>{successMsg}</p>}
+            <ListSubheader component="div">Add Photo</ListSubheader>
+            <input type="file" id="file" name="file" ref={fileInput} />
+            <input type="submit" />
+            {errorMessage && <p>{JSON.stringify(errorMessage)}</p>}
+          </form>
+        </div>
+        <br />
+        <br />
+        <div className={classes.root}>
+          <GridList data={filesData} heading="Photos of You" />
+        </div>
       </div>
-    )
-  }
+    );
+  return <p>Loading...</p>;
+};
 
-  return <p>Loading...</p>
-}
-
-export default Index
+export default Index;
