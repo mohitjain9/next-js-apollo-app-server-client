@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Field from '../client/components/Field';
 import {useSingUp} from '../client/network';
 
-export default function SignUp() {
+function SignUp() {
   const [errorMsg, handleSubmit] = useSingUp();
   return (
     <div>
@@ -19,3 +19,4 @@ export default function SignUp() {
     </div>
   );
 }
+export default SignUp;
