@@ -42,20 +42,14 @@ export default async function (req, res) {
   const session = await getLoginSession(req);
   if (session && upload) {
     req.user = session;
-    await new Promise((resolve) => {
-      upload(req, res, function (err) {
-        if (err) {
-          if (err.code === 'LIMIT_FILE_SIZE') {
-            res.status(400).end('Too Large File....');
-            return resolve();
-          }
-          console.log({err});
-          res.status(500).json('Internal Server Error');
-          resolve();
+    return upload(req, res, function (err) {
+      if (err) {
+        if (err.code === 'LIMIT_FILE_SIZE') {
+          return res.status(400).end('Too Large File....');
         }
-        res.json({uploaded: 1});
-        resolve();
-      });
+        return res.status(500).json('Internal Server Error');
+      }
+      res.json({uploaded: 1});
     });
   }
   res.status(500).end('Internal Server Error');
