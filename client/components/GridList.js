@@ -17,10 +17,16 @@ const GridListComponent = ({data, heading}) => {
   if (!data) {
     return <center>Loading...</center>;
   }
+  if (!data.length) {
+    heading = 'No Photos found';
+  }
+
   return (
     <GridList cellHeight={180} cols={4}>
       <GridListTile key="Subheader" cols={4} style={{height: 'auto'}}>
-        <ListSubheader component="div">{heading}</ListSubheader>
+        <center>
+          <ListSubheader component="div">{heading}</ListSubheader>
+        </center>
       </GridListTile>
       {data
         ? data.map((tile) => {
