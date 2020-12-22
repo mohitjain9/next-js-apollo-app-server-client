@@ -14,7 +14,9 @@ const useStyles = makeStyles(() => ({
 
 const GridListComponent = ({data, heading}) => {
   const classes = useStyles();
-
+  if (!data) {
+    return <center>Loading...</center>;
+  }
   return (
     <GridList cellHeight={180} cols={4}>
       <GridListTile key="Subheader" cols={4} style={{height: 'auto'}}>
