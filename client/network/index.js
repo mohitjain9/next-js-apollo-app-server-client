@@ -22,19 +22,22 @@ export const fetcher = (fetchDatePayload) => {
     });
 };
 
-export const useGetMe = () => {
+export const useQuery = (fetchPayload) => {
   const [errorMsg, setErrorMsg] = useState();
   const [data, setData] = useState();
-
   useEffect(() => {
-    fetcher('/api/me')
+    setErrorMsg('');
+    fetcher(fetchPayload)
       .then((data) => {
         setData(data);
       })
       .catch(setErrorMsg);
   }, []);
-
   return [errorMsg, data];
+};
+
+export const useGetMe = () => {
+  return useQuery('/api/me');
 };
 
 export const useSingInSingUp = (url, onSuccessPath) => {
@@ -105,7 +108,7 @@ export const useHandleFileUpload = (fileInput, url = '/api/upload') => {
           data: formData,
         });
         fileInput.current.value = '';
-        cb();
+        cb && cb();
         setSuccessMsg('File Uploaded Successfully');
         setErrorMsg('');
       } catch (error) {
