@@ -123,7 +123,7 @@ export const useHandleFileUpload = (fileInput, url = '/api/upload') => {
 
 export const useGetPhotos = (url = '/api/files') => {
   const [errorMsg, setErrorMsg] = useState();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [renderCount, setRenderCount] = useState(0);
   try {
     useEffect(() => {

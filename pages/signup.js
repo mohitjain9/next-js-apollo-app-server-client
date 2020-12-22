@@ -4,6 +4,7 @@ import {useSingUp} from '../client/network';
 
 function SignUp() {
   const [errorMsg, handleSubmit] = useSingUp();
+
   return (
     <div>
       <h1>Sign Up</h1>

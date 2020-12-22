@@ -35,6 +35,7 @@ function a11yProps(index) {
 
 const pageNameMapping = {'/': 'Home', '/signin': 'Sing In', '/signup': 'Sign Up', '/photos': 'Photos'};
 const pageTabIndexMapping = {0: '/', 1: '/photos'};
+
 function MyApp(props) {
   const {Component, pageProps} = props;
   const classes = useStyles();

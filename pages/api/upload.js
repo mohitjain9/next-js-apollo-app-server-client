@@ -5,6 +5,7 @@ import {getLoginSession} from '../../server/lib/auth';
 
 async function getUplaod() {
   const gfs = await getGFS();
+
   const storage = GridFsStorage({
     gfs,
     filename: function (req, file, cb) {
@@ -40,6 +41,7 @@ export const config = {
 export default async function (req, res) {
   const upload = await getUplaod();
   const session = await getLoginSession(req);
+
   if (session && upload) {
     req.user = session;
     return upload(req, res, function (err) {

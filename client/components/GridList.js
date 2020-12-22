@@ -20,23 +20,25 @@ const GridListComponent = ({data, heading}) => {
       <GridListTile key="Subheader" cols={4} style={{height: 'auto'}}>
         <ListSubheader component="div">{heading}</ListSubheader>
       </GridListTile>
-      {data.map((tile) => {
-        const {_id, metadata} = tile;
-        const {user = {}, originalname} = metadata;
-        return (
-          <GridListTile key={_id}>
-            <img src={'/api/file/' + _id} alt={originalname} />
-            <GridListTileBar
-              subtitle={user.email && <span>by: {user.email}</span>}
-              actionIcon={
-                <IconButton aria-label={`info about ${originalname}`} className={classes.icon}>
-                  <InfoIcon />
-                </IconButton>
-              }
-            />
-          </GridListTile>
-        );
-      })}
+      {data
+        ? data.map((tile) => {
+            const {_id, metadata} = tile;
+            const {user = {}, originalname} = metadata;
+            return (
+              <GridListTile key={_id}>
+                <img src={'/api/file/' + _id} alt={originalname} />
+                <GridListTileBar
+                  subtitle={user.email && <span>by: {user.email}</span>}
+                  actionIcon={
+                    <IconButton aria-label={`info about ${originalname}`} className={classes.icon}>
+                      <InfoIcon />
+                    </IconButton>
+                  }
+                />
+              </GridListTile>
+            );
+          })
+        : 'Loading...'}
     </GridList>
   );
 };

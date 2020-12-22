@@ -19,14 +19,17 @@ const Index = () => {
   const [error, data] = useGetMe();
   const [errorMessage, successMsg, handleFileSubmit] = useHandleFileUpload(fileInput);
   const [fileError, filesData, reload] = useGetPhotos('/api/myFiles');
+
   const handleFileUpload = useCallback((event) => {
     return handleFileSubmit(event, reload);
   });
+
   useEffect(() => {
     if (error) {
       router.push('/signin');
     }
   }, [error]);
+
   if (data)
     return (
       <div className={styles.flexColumn}>

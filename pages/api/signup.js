@@ -5,6 +5,7 @@ export default async function userHandler(req, res) {
     body: {email, password},
     method,
   } = req;
+
   switch (method) {
     case 'POST':
       const user = await createUser({email, password});
