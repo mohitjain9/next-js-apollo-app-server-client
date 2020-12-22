@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Field from '../client/components/Field';
-import {useSingIn} from '../client/network';
+import {useSingIn} from '../client/hooks';
 
 function SignIn() {
   const [errorMsg, handleSubmit] = useSingIn();

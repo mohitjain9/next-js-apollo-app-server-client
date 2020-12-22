@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useRef} from 'react';
 import {useRouter} from 'next/router';
-import {useGetMe, useHandleFileUpload, useGetPhotos} from '../client/network';
+import {useGetMe, useHandleFileUpload, useGetPhotos} from '../client/hooks';
 import {makeStyles} from '@material-ui/core/styles';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import styles from '../client/styles/styles.module.css';

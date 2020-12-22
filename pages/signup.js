@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Field from '../client/components/Field';
-import {useSingUp} from '../client/network';
+import {useSingUp} from '../client/hooks';
 
 function SignUp() {
   const [errorMsg, handleSubmit] = useSingUp();
