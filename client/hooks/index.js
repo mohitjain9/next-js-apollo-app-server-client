@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useRouter} from 'next/router';
-import {useQuery, fetcher} from '../hooks';
+import {useQuery, fetcher} from '../network';
 
 export const useGetMe = () => {
   return useQuery('/api/me');
